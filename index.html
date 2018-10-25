@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="assets/index.css">
+		<script src="assets/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+
+			<!-- product card -->
+			<div class="card">
+				<a class="card__anchor" href="/">
+					<span class="card__cover">
+						<img src="assets/img/image.jpg" alt="Bose SoundLink" class="card__image">
+					</span>
+					<span class="card__title">Bose SoundLink</span>
+					<span class="card__subtitle">Litle speaker, Big goosebumps.</span>
+					<span class="card__label">BESTSELER</span>
+				</a>
+				<div class="card__pill">
+					<a class="card__pill__item" @click.prevent="showPopover = true" href="#">
+						<img src="assets/img/quicklook.svg" height="16" alt="">
+					</a>
+					<b class="card__pill__item">$199</b>
+				</div>
+			</div>
+
+			<!-- popover -->
+			<transition name="popover-">
+				<div class="popover" v-if="showPopover" @click="showPopover = false">
+					<div class="popover__container" @click="(e) => e.stopPropagation()">
+						<span class="popover__label">BESTSELLER</span>
+						<div
+							class="popover__gallery"
+							:style="'background-image: url(' + popoverGallery[popoverActiveGallery] + ')'">
+							<div class="popover__gallery__pager">
+								<a
+									href="#"
+									v-for="(dot, index) in popoverGallery"
+									:key="index"
+									class="popover__gallery__toggle"
+									:class="popoverActiveGallery === index && 'popover__gallery__toggle--active'"
+									@click="popoverActiveGallery = index"></a>
+							</div>
+						</div>
+						<div class="popover__content">
+							<h3 class="popover__title">Bose SoundLink</h3>
+							<span class="popover__price">$ 199</span>
+							<p class="popover__description">Wireless earphones for music lovers <br> who live to move.</p>
+
+							<!-- tabs -->
+							<div class="popover__tab">
+								<a
+									href="#"
+									class="popover__tab__item"
+									:class="popoverActiveTab === 'specifications' && 'popover__tab__item--active'"
+									@click.prevent="popoverActiveTab = 'specifications'">
+									Specification
+								</a>
+								<a
+									href="#"
+									class="popover__tab__item"
+									:class="popoverActiveTab === 'features' && 'popover__tab__item--active'"
+									@click.prevent="popoverActiveTab = 'features'">
+									Features
+								</a>
+							</div>
+
+							<!-- tab content -->
+							<div class="popover__tabContent">
+								<transition name="popover__wrapper-">
+									<div class="popover__wrapper" v-if="popoverActiveTab === 'specifications'" key="specifications">
+										<ul class="popover__lists">
+											<li>Up to 8 hours playtime</li>
+											<li>Powerfull sound</li>
+											<li>Wireless earphones</li>
+										</ul>
+										<div class="popover__line"></div>
+										<h4 class="popover__subheading">Choose your colors</h4>
+										<div class="popover__color">
+											<label class="popover__color__option">
+												<input type="radio" name="color" checked>
+												<span style="background: #dadada"></span>
+											</label>
+											<label class="popover__color__option">
+												<input type="radio" name="color">
+												<span style="background: #3c3c3c"></span>
+											</label>
+											<label class="popover__color__option">
+												<input type="radio" name="color">
+												<span style="background: #d8b56a"></span>
+											</label>
+										</div>
+									</div>
+
+									<div class="popover__wrapper" v-if="popoverActiveTab === 'features'" key="features">
+										<ul class="popover__lists">
+											<li>Bumpers for bumping</li>
+											<li>All sound. No Seam</li>
+											<li>Grab and go</li>
+										</ul>
+									</div>
+								</transition>
+							</div>
+
+							<div class="popover__line"></div>
+							<ul class="popover__lists">
+								<li>Free Shipping & returns + 2 year warranty</li>
+							</ul>
+							<div class="popover__line"></div>
+							
+							<!-- call to actions -->
+							<div class="popover__cta">
+								<a class="popover__cta__button" href="#"><img src="assets/img/cart.svg" height="18" alt="add to shopping cart"></a>
+								<a class="popover__cta__button" href="#">BUY NOW</a>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</transition>
+
+		</div>
+		<script>
+			new Vue({
+				el: '#app',
+				data: {
+					showPopover: false,
+					popoverActiveTab: "specifications",
+					popoverActiveGallery: 0,
+					popoverGallery: [
+						"assets/img/image.jpg",
+						"assets/img/image2.jpg",
+						"assets/img/image3.jpg"
+					]
+				}
+			})
+		</script>
+	</body>
+</html>
